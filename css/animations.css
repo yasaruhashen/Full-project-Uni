@@ -1,0 +1,291 @@
+/* =====================================================
+   UniHub Lanka – Shared Animation System
+   animations.css  |  v1.0
+   Only animates: opacity, transform (GPU-safe)
+   CLS = 0: animated elements keep their space via
+   visibility rather than display:none
+   ===================================================== */
+
+/* ── 0. JS-detection guard ──────────────────────────── */
+/* When JS loads, <html> gets class="js".
+   Only then do we hide not-yet-visible elements.
+   Without JS → everything shows immediately.             */
+
+/* ── 1. Page-load animations (always fire, no JS needed) */
+
+/* Body fade-in */
+body {
+  animation: agy-body-in 400ms ease both;
+}
+
+/* Navbar slide-down */
+.main-navbar {
+  animation: agy-nav-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Top bar fade */
+.top-bar {
+  animation: agy-fade-in 500ms 80ms ease both;
+}
+
+@keyframes agy-body-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes agy-nav-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes agy-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── 2. Hero stagger (index.html home hero) ─────────── */
+/* Elements use --hero-delay CSS var set inline           */
+
+.hero-entitled-badge,
+.home-hero-title,
+.home-hero-subtext,
+.home-hero-btns,
+.hero-trust-checks {
+  animation: agy-hero-up 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+.hero-entitled-badge  { --hero-delay: 120ms; }
+.home-hero-title      { --hero-delay: 210ms; }
+.home-hero-subtext    { --hero-delay: 300ms; }
+.home-hero-btns       { --hero-delay: 390ms; }
+.hero-trust-checks    { --hero-delay: 480ms; }
+
+/* Graduate photo: fade + scale + translateX (desktop) / Y (mobile) */
+.hero-visual-col {
+  animation: agy-hero-photo-desk 800ms 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (max-width: 991.98px) {
+  .hero-visual-col {
+    animation-name: agy-hero-photo-mob;
+  }
+}
+
+/* 70% badge: pop-in after photo, then float loop */
+.hero-floating-badge {
+  animation:
+    agy-badge-popin 500ms 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    agy-float-loop 4s 1200ms ease-in-out infinite;
+}
+
+/* Inner hero pages (programs-hero): simpler stagger */
+.hero-tag {
+  animation: agy-hero-up 600ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.programs-hero-title {
+  animation: agy-hero-up 600ms 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.programs-hero-subtitle {
+  animation: agy-hero-up 600ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes agy-hero-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes agy-hero-photo-desk {
+  from { opacity: 0; transform: scale(0.96) translateX(24px); }
+  to   { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@keyframes agy-hero-photo-mob {
+  from { opacity: 0; transform: scale(0.96) translateY(24px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes agy-badge-popin {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes agy-float-loop {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* ── 3. Scroll-reveal utility classes ───────────────── */
+/* Under .js, hide before visible. No JS → always show. */
+
+.js [data-animate] {
+  opacity: 0;
+  /* preserve layout space */
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js [data-animate="fade-up"]    { transform: translateY(28px); }
+.js [data-animate="fade-in"]    { transform: none; }
+.js [data-animate="slide-left"] { transform: translateX(-32px); }
+.js [data-animate="slide-right"]{ transform: translateX(32px); }
+.js [data-animate="zoom-in"]    { transform: scale(0.94); }
+
+/* On mobile: left/right → fade-up (no horizontal shift) */
+@media (max-width: 768px) {
+  .js [data-animate="slide-left"],
+  .js [data-animate="slide-right"] {
+    transform: translateY(28px);
+  }
+}
+
+/* Visible state (added by JS IntersectionObserver) */
+.js [data-animate].is-visible {
+  opacity: 1;
+  transform: none;
+  transition-delay: var(--delay, 0ms);
+}
+
+/* Stagger: children of [data-stagger] get --i via JS;
+   this sets the delay from the CSS var.               */
+.js [data-stagger] > [data-animate].is-visible {
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* ── 4. WhatsApp button: pop-in + pulse ring ─────────── */
+.floating-whatsapp {
+  animation: agy-wa-popin 500ms 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Pulse ring on ::after (not on button itself) */
+.floating-whatsapp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  z-index: -1;
+  opacity: 0;
+  animation: agy-wa-pulse 4s 2s ease-out infinite;
+}
+
+@keyframes agy-wa-popin {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes agy-wa-pulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  60%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* ── 5. Nav links: underline grows left-to-right ─────── */
+@media (hover: hover) {
+  .main-navbar .nav-link {
+    position: relative;
+  }
+  .main-navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 220ms ease;
+  }
+  .main-navbar .nav-link:hover::after,
+  .main-navbar .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  /* Button micro-interactions */
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-whatsapp-advisor {
+    transition: transform 200ms ease, box-shadow 200ms ease !important;
+  }
+  .btn-hero-primary:hover,
+  .btn-hero-secondary:hover,
+  .btn-whatsapp-advisor:hover {
+    transform: translateY(-2px) !important;
+  }
+  .btn-hero-primary:active,
+  .btn-hero-secondary:active {
+    transform: scale(0.98) !important;
+  }
+
+  /* Arrow icon nudge on hover */
+  .btn-hero-primary:hover .bi-arrow-right,
+  .btn-hero-secondary:hover .bi-arrow-right,
+  .why-card-link:hover .bi-arrow-right,
+  .home-prog-arrow-btn:hover .bi-arrow-right,
+  .trust-strip-link:hover .bi-arrow-right {
+    transform: translateX(4px);
+    transition: transform 200ms ease;
+  }
+
+  /* University logo box scale */
+  .univ-logo-box {
+    transition: transform 220ms ease !important;
+  }
+  .univ-card:hover .univ-logo-box {
+    transform: scale(1.03) !important;
+  }
+}
+
+/* ── 6. Mobile menu: slide-fade in ──────────────────── */
+.navbar-collapse.collapsing {
+  transition: height 250ms ease !important;
+}
+/* Stagger nav items when menu opens */
+#unihubNavbar.show .nav-item {
+  animation: agy-hero-up 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+#unihubNavbar.show .nav-item:nth-child(1) { animation-delay: 40ms; }
+#unihubNavbar.show .nav-item:nth-child(2) { animation-delay: 90ms; }
+#unihubNavbar.show .nav-item:nth-child(3) { animation-delay: 140ms; }
+#unihubNavbar.show .nav-item:nth-child(4) { animation-delay: 190ms; }
+#unihubNavbar.show .nav-item:nth-child(5) { animation-delay: 240ms; }
+
+/* ── 7. Tab content fade on switch ──────────────────── */
+.tab-pane.show.active {
+  animation: agy-tab-in 200ms ease both;
+}
+@keyframes agy-tab-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 8. Stats bar count-up: no special CSS needed ────── */
+/* JS handles count-up via IntersectionObserver          */
+
+/* ── 9. prefers-reduced-motion: show everything instantly */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0.001ms !important;
+  }
+
+  .js [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── 10. Overflow guard (prevent translateX bleed) ───── */
+body {
+  overflow-x: clip;
+}

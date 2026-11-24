@@ -19,6 +19,10 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- Animation System CSS -->
+  <link rel="stylesheet" href="css/animations.css">
+  <!-- JS-detection guard: runs before defer scripts so .js class is set instantly -->
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
@@ -187,25 +191,23 @@
     </div>
   </section>
 
-  <!-- ===================================================
-       SECTION 2: WHY UNIHUB LANKA
-       =================================================== -->
+  <!-- Section 2: Why UniHub Lanka -->
   <section class="home-why-section">
     <div class="container">
       <!-- Section Header -->
       <div class="text-center">
-        <span class="home-section-tag">WHY UNIHUB LANKA</span>
-        <h2 class="home-section-title">A smarter path to a globally<br class="d-none d-md-block"> respected degree</h2>
-        <p class="home-section-subtitle">
+        <span class="home-section-tag" data-animate="fade-up">WHY UNIHUB LANKA</span>
+        <h2 class="home-section-title" data-animate="fade-up">A smarter path to a globally<br class="d-none d-md-block"> respected degree</h2>
+        <p class="home-section-subtitle" data-animate="fade-up">
           Everything you need to advance—without the cost, confusion, or career interruption.
         </p>
       </div>
 
       <!-- 3 Feature Cards -->
-      <div class="row g-4">
+      <div class="row g-4" data-stagger>
 
         <!-- Card 01 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="why-card">
             <div>
               <div class="why-card-top">
@@ -229,7 +231,7 @@
         </div>
 
         <!-- Card 02 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="why-card">
             <div>
               <div class="why-card-top">
@@ -253,7 +255,7 @@
         </div>
 
         <!-- Card 03 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="why-card">
             <div>
               <div class="why-card-top">
@@ -287,7 +289,7 @@
     <div class="container">
 
       <!-- Section Header -->
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-5">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-5" data-animate="fade-up">
         <div>
           <span class="home-section-tag">CAREER-ALIGNED PROGRAMS</span>
           <h2 class="home-section-title mb-0">Qualifications that move you<br class="d-none d-md-block"> forward</h2>
@@ -300,10 +302,10 @@
       </div>
 
       <!-- 3 Program Cards -->
-      <div class="row g-4">
+      <div class="row g-4" data-stagger>
 
         <!-- Program 1: MBA -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="home-program-card">
             <div>
               <div class="home-prog-top">
@@ -325,7 +327,7 @@
         </div>
 
         <!-- Program 2: MSc Data Science -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="home-program-card">
             <div>
               <div class="home-prog-top">
@@ -347,7 +349,7 @@
         </div>
 
         <!-- Program 3: BBA -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-animate="fade-up">
           <div class="home-program-card">
             <div>
               <div class="home-prog-top">
@@ -402,7 +404,7 @@
         </div>
 
         <!-- Right 2x2 University Grid -->
-        <div class="home-partners-grid">
+        <div class="home-partners-grid" data-animate="slide-right">
           <div class="partner-grid-box">
 
             <!-- Manipal -->
@@ -571,6 +573,8 @@
 
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Animation Engine -->
+  <script src="js/animations.js" defer></script>
 
   <!-- Typewriter Effect Script & Header Height Calculation -->
   <script>

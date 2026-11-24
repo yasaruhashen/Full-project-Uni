@@ -2155,9 +2155,10 @@ body {
 }
 
 .typewriter-line {
-  display: inline-block;
-  white-space: nowrap;
+  display: inline;
+  white-space: normal;
   vertical-align: bottom;
+  overflow-wrap: break-word;
 }
 
 .typewriter-dynamic {
@@ -2885,5 +2886,188 @@ body {
 
   .partner-grid-cell:nth-child(3) {
     border-bottom: 1px solid #e2e8f0;
+  }
+}
+
+/* ===================================================
+   HOMEPAGE MOBILE RESPONSIVE (max-width: 768px)
+   =================================================== */
+@media (max-width: 768px) {
+
+  /* ---- Hero section: contain overflow ---- */
+  .home-hero-section {
+    overflow-x: clip;
+  }
+
+  /* ---- Hero content column ---- */
+  .hero-content-col {
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
+  /* ---- Headline: wraps naturally, no forced nowrap ---- */
+  .home-hero-title {
+    font-size: clamp(22px, 7.5vw, 30px);
+    line-height: 1.18;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* ---- Typewriter span: allow wrap on mobile ---- */
+  .typewriter-line {
+    display: inline;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* ---- Subtext ---- */
+  .home-hero-subtext {
+    font-size: clamp(14px, 4vw, 16px);
+    max-width: 100%;
+    margin-bottom: 18px;
+  }
+
+  /* ---- Buttons: stack full-width ---- */
+  .home-hero-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    min-height: 50px;
+    font-size: 15px;
+  }
+
+  /* ---- Trust checks ---- */
+  .hero-trust-checks {
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  /* ---- Hero visual: prevent bleed ---- */
+  .home-hero-visual {
+    overflow: hidden;
+    max-width: 100%;
+    position: relative;
+  }
+
+  /* ---- Graduate photo ---- */
+  .hero-student-img {
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+    display: block;
+    margin: 16px auto 0;
+    object-fit: contain;
+  }
+
+  /* ---- Background ring: contained, centered ---- */
+  .hero-ring-back {
+    position: absolute;
+    width: min(80vw, 280px) !important;
+    height: min(80vw, 280px) !important;
+    right: 50%;
+    transform: translateX(50%);
+    top: 10px;
+  }
+
+  /* ---- 70% badge: smaller, stays in viewport ---- */
+  .hero-floating-badge {
+    width: 72px !important;
+    height: 72px !important;
+    top: 8px;
+    right: 8px;
+  }
+
+  .floating-badge-percent {
+    font-size: 17px !important;
+  }
+
+  .floating-badge-label {
+    font-size: 6px !important;
+  }
+
+  /* ---- Stats strip ---- */
+  .hero-stats-strip {
+    padding: 20px 16px;
+  }
+
+  .stat-number {
+    font-size: 26px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .hero-stat-item {
+    gap: 8px;
+  }
+
+  /* ---- Why section cards ---- */
+  .why-card {
+    padding: 24px 20px;
+  }
+
+  .why-card-title {
+    font-size: 18px;
+  }
+
+  .why-card-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .why-card-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* ---- Partner institutions: single column ---- */
+  .home-partners-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .home-partners-text,
+  .home-partners-grid {
+    width: 100%;
+  }
+
+  .home-partners-badge {
+    align-self: center;
+  }
+
+  .partner-grid-cell {
+    padding: 24px 18px;
+  }
+
+  /* ---- WhatsApp floating button ---- */
+  .floating-whatsapp {
+    width: 50px;
+    height: 50px;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    font-size: 26px;
+  }
+
+  /* ---- Footer bottom padding (WhatsApp button clearance) ---- */
+  .site-footer,
+  footer {
+    padding-bottom: 80px;
+  }
+
+  /* ---- Top bar: readable on small screens ---- */
+  .top-bar {
+    font-size: 12px;
+    padding: 8px 14px;
+    text-align: center;
   }
 }
